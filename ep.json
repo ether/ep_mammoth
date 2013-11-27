@@ -1,0 +1,11 @@
+{
+  "parts": [
+    {
+      "name": "ep_mammoth",
+      "hooks":{
+        "import": "ep_mammoth/import.js"
+      }
+    }
+  ]
+}
+
