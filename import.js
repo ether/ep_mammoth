@@ -17,11 +17,8 @@ exports.import = function(hook_name, args, callback){
     path: srcFile
   }).then(
   function(result) {
- // result.value
-  result.value = "<html><body>Erro</body></html>";
-    fs.writeFile(destFile, result.value, 'utf8', function(err){
+    fs.writeFile(destFile, "<body>"+result.value+"</body>", 'utf8', function(err){
       if(err) callback(err, null);
-      console.log("wrote to", destFile);
       callback(destFile);
     });
   }).done(function(){
