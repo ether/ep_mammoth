@@ -9,7 +9,7 @@ exports.import = function(hook_name, args, callback){
   var docType = srcFile.split('.').pop();
 
   // console.log("docType", docType);
-  if(docType !== "docx" && docType !== "doc") return callback(); // we don't support this doctype in this plugin
+  if(docType !== "docx") return callback(); // we don't support this doctype in this plugin
   var results = "";
 
   mammoth.convertToHtml(
