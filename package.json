@@ -1,7 +1,7 @@
 {
   "name": "ep_mammoth",
   "description": "Support for improved import of microsoft word doc and docx documents",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": {
     "name": "johnyma22",
     "email": "john@mclear.co.uk",
