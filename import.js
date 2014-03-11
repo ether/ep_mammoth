@@ -8,7 +8,6 @@ exports.import = function(hook_name, args, callback){
   // First things first do we handle this doc type?
   var docType = srcFile.split('.').pop();
 
-  console.log("docType", docType);
   if(docType !== "docx") return callback(); // we don't support this doctype in this plugin
   var results = "";
   console.log("Using mammoth to convert DocX file");
@@ -18,10 +17,8 @@ exports.import = function(hook_name, args, callback){
     path: srcFile
   }).then(
   function(result) {
-    result.value = "<html><body>Erro</body></html>";
-    fs.writeFile(destFile, result.value, 'utf8', function(err){
+    fs.writeFile(destFile, "<body>"+result.value+"</body>", 'utf8', function(err){
       if(err) callback(err, null);
-      console.log("wrote to", destFile);
       callback(destFile);
     });
   })
