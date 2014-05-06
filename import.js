@@ -7,8 +7,12 @@ exports.import = function(hook_name, args, callback){
 
   var options = {
     styleMap: [
-      "p[style-name='Heading 1'] => h1:fresh",
-      "p[style-name='Heading 2'] => h2:fresh"
+      "p[style-name='Heading 1'] => p:fresh > h1:fresh",
+      "p[style-name='Heading 2'] => p:fresh > h2:fresh",
+      "p[style-name='Heading 3'] => p:fresh > h3:fresh",
+      "p[style-name='Heading 4'] => p:fresh > h4:fresh",
+      "p[style-name='Heading 5'] => p:fresh > h5:fresh",
+      "p[style-name='Heading 6'] => p:fresh > h6:fresh"
     ]
   };
 
@@ -25,7 +29,8 @@ exports.import = function(hook_name, args, callback){
   }, options).then(
   function(result) {
     console.log(result.value);
-    fs.writeFile(destFile, "<body>"+result.value+"</body>", 'utf8', function(err){
+//    result.value = result.value.replace("</h1>", "</h1><br>");
+    fs.writeFile(destFile, "<!doctype html>\n<html lang=\'en\'>\n<body>\n"+result.value+"\n</body>\n</html>\n", 'utf8', function(err){
       if(err) callback(err, null);
       callback(destFile);
     });
