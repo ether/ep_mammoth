@@ -5,6 +5,13 @@ exports.import = function(hook_name, args, callback){
   var srcFile = args.srcFile;
   var destFile = args.destFile;
 
+  var options = {
+    styleMap: [
+      "p[style-name='Heading 1'] => h1:fresh",
+      "p[style-name='Heading 2'] => h2:fresh"
+    ]
+  };
+
   // First things first do we handle this doc type?
   var docType = srcFile.split('.').pop();
 
@@ -15,8 +22,9 @@ exports.import = function(hook_name, args, callback){
   mammoth.convertToHtml(
   {
     path: srcFile
-  }).then(
+  }, options).then(
   function(result) {
+    console.log(result.value);
     fs.writeFile(destFile, "<body>"+result.value+"</body>", 'utf8', function(err){
       if(err) callback(err, null);
       callback(destFile);
