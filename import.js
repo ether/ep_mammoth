@@ -7,13 +7,15 @@ exports.import = function(hook_name, args, callback){
 
   var options = {
     styleMap: [
+      "p[style-name='center'] => center",
       "p[style-name='Heading 1'] => p:fresh > h1:fresh",
       "p[style-name='Heading 2'] => p:fresh > h2:fresh",
       "p[style-name='Heading 3'] => p:fresh > h3:fresh",
       "p[style-name='Heading 4'] => p:fresh > h4:fresh",
       "p[style-name='Heading 5'] => p:fresh > h5:fresh",
       "p[style-name='Heading 6'] => p:fresh > h6:fresh"
-    ]
+    ],
+    transformDocument: transformElement
   };
 
   // First things first do we handle this doc type?
@@ -42,4 +44,16 @@ exports.import = function(hook_name, args, callback){
   .done(function(){
     // done
   });
+}
+
+function transformElement(element) {
+  if (element.children) {
+    element.children.forEach(transformElement);
+  }
+  if (element.type === "paragraph") {
+    if (element.alignment === "center" && !element.styleId) {
+      element.styleName = "center";
+    }
+  }
+  return element;
 }

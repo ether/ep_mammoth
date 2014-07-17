@@ -7,7 +7,17 @@ console.log("Testing", docxPath);
 
 require("mammoth/lib/docx/docx-reader").read({path: docxPath}).then(function(raw){
   console.log("Input data");
-  console.log(raw.value);
+  var data = raw.value.children;
+  // console.log(data);
+  for (var i in data){
+    console.log("Line number", i);
+    var blob = data[i];
+    console.log(blob);
+    var children = blob.children;
+    var boo = children[0];
+    console.log(boo);
+    console.log("==========================\n\n");
+  }
 });
 
 var options = {
