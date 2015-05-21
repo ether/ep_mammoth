@@ -1,9 +1,14 @@
 var mammoth = require("./node_modules/mammoth");
 var fs = require("fs");
+var settings = require("ep_etherpad-lite/node/utils/Settings");
 
 exports.import = function(hook_name, args, callback){
   var srcFile = args.srcFile;
   var destFile = args.destFile;
+
+  if(!settings.ep_mammoth){
+    settings.ep_mammoth = {};
+  }
 
   var options = {
     styleMap: [
@@ -15,7 +20,8 @@ exports.import = function(hook_name, args, callback){
       "p[style-name='Heading 5'] => p:fresh > h5:fresh",
       "p[style-name='Heading 6'] => p:fresh > h6:fresh"
     ],
-    transformDocument: transformElement
+    transformDocument: transformElement,
+    ignoreEmptyParagraphs: settings.ep_mammoth.ignoreEmptyParagraphsfalse || true
   };
 
   // First things first do we handle this doc type?
