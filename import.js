@@ -9,6 +9,9 @@ exports.import = function(hook_name, args, callback){
   if(!settings.ep_mammoth){
     settings.ep_mammoth = {};
   }
+  if(settings.ep_mammoth.ignoreEmptyParagraphs !== false){
+    settings.ep_mammoth.ignoreEmptyParagraphs = true;
+  }
 
   var options = {
     styleMap: [
@@ -21,7 +24,7 @@ exports.import = function(hook_name, args, callback){
       "p[style-name='Heading 6'] => p:fresh > h6:fresh"
     ],
     transformDocument: transformElement,
-    ignoreEmptyParagraphs: settings.ep_mammoth.ignoreEmptyParagraphsfalse || true
+    ignoreEmptyParagraphs: settings.ep_mammoth.ignoreEmptyParagraphs
   };
 
   // First things first do we handle this doc type?
