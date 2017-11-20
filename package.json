@@ -1,7 +1,7 @@
 {
   "name": "ep_mammoth",
   "description": "Support for improved import of microsoft word doc and docx documents",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": {
     "name": "johnyma22",
     "email": "john@mclear.co.uk",
@@ -9,7 +9,7 @@
   },
   "contributors": [],
   "dependencies": {
-    "mammoth":"0.3.19"
+    "mammoth":"1.4.3"
   },
   "engines": {
     "node": "*"
