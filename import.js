@@ -16,6 +16,10 @@ exports.import = function(hook_name, args, callback){
   var options = {
     styleMap: [
       "p[style-name='center'] => center",
+      "p[style-name='right'] => right",
+      "p[style-name='left'] => left",
+      "p[style-name='justify'] => justify",
+
       "p[style-name='Heading 1'] => p:fresh > h1:fresh",
       "p[style-name='Heading 2'] => p:fresh > h2:fresh",
       "p[style-name='Heading 3'] => p:fresh > h3:fresh",
@@ -62,6 +66,15 @@ function transformElement(element) {
   if (element.type === "paragraph") {
     if (element.alignment === "center" && !element.styleId) {
       element.styleName = "center";
+    }
+    if (element.alignment === "left" && !element.styleId) {
+      element.styleName = "left";
+    }
+    if (element.alignment === "right" && !element.styleId) {
+      element.styleName = "right";
+    }
+    if (element.alignment === "justify" && !element.styleId) {
+      element.styleName = "justify";
     }
   }
   return element;
