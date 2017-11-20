@@ -15,10 +15,10 @@ exports.import = function(hook_name, args, callback){
 
   var options = {
     styleMap: [
-      "p[style-name='center'] => center",
-      "p[style-name='right'] => right",
-      "p[style-name='left'] => left",
-      "p[style-name='justify'] => justify",
+      "p[style-name='center'] => p:fresh > center",
+      "p[style-name='right'] => p:fresh > right",
+      "p[style-name='left'] => p:fresh > left",
+      "p[style-name='justify'] => p:fresh > justify",
 
       "p[style-name='Heading 1'] => p:fresh > h1:fresh",
       "p[style-name='Heading 2'] => p:fresh > h2:fresh",
