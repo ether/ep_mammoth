@@ -1,4 +1,4 @@
-var mammoth = require("./node_modules/mammoth");
+var mammoth = require("../../node_modules/mammoth");
 var fs = require("fs");
 var settings = require("ep_etherpad-lite/node/utils/Settings");
 
