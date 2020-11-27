@@ -1,26 +1,26 @@
-var mammoth = require("mammoth");
-var fs = require("fs");
+const mammoth = require('mammoth');
+const fs = require('fs');
 
-var docxPath = "/home/jose/Desktop/centre.docx";
-if(process.argv[2]) docxPath = process.argv[2];
-console.log("Testing", docxPath);
+let docxPath = '/home/jose/Desktop/centre.docx';
+if (process.argv[2]) docxPath = process.argv[2];
+console.log('Testing', docxPath);
 
-require("mammoth/lib/docx/docx-reader").read({path: docxPath}).then(function(raw){
-  console.log("Input data");
-  var data = raw.value.children;
+require('mammoth/lib/docx/docx-reader').read({path: docxPath}).then((raw) => {
+  console.log('Input data');
+  const data = raw.value.children;
   // console.log(data);
-  for (var i in data){
-    console.log("Line number", i);
-    var blob = data[i];
+  for (const i in data) {
+    console.log('Line number', i);
+    const blob = data[i];
     console.log(blob);
-    var children = blob.children;
-    var boo = children[0];
+    const children = blob.children;
+    const boo = children[0];
     console.log(boo);
-    console.log("==========================\n\n");
+    console.log('==========================\n\n');
   }
 });
 
-var options = {
+const options = {
   styleMap: [
     "p[style-name='center'] => center",
     "p[style-name='Heading 1'] => p:fresh > h1:fresh",
@@ -28,33 +28,32 @@ var options = {
     "p[style-name='Heading 3'] => p:fresh > h3:fresh",
     "p[style-name='Heading 4'] => p:fresh > h4:fresh",
     "p[style-name='Heading 5'] => p:fresh > h5:fresh",
-    "p[style-name='Heading 6'] => p:fresh > h6:fresh"
+    "p[style-name='Heading 6'] => p:fresh > h6:fresh",
   ],
-  transformDocument: transformElement
+  transformDocument: transformElement,
 };
 
 mammoth.convertToHtml({path: docxPath}, options)
-.then(function(result){
-  var html = result.value; // The generated HTML
-  var messages = result.messages; // Any messages, such as warnings during conversion
-  console.log(result);
-})
-.fail(function(e){
-  console.log("ERROR!");
-})
-.done(function(result){
-  console.log(result);
-});
+    .then((result) => {
+      const html = result.value; // The generated HTML
+      const messages = result.messages; // Any messages, such as warnings during conversion
+      console.log(result);
+    })
+    .fail((e) => {
+      console.log('ERROR!');
+    })
+    .done((result) => {
+      console.log(result);
+    });
 
 function transformElement(element) {
   if (element.children) {
     element.children.forEach(transformElement);
   }
-  if (element.type === "paragraph") {
-    if (element.alignment === "center" && !element.styleId) {
-      element.styleName = "center";
+  if (element.type === 'paragraph') {
+    if (element.alignment === 'center' && !element.styleId) {
+      element.styleName = 'center';
     }
   }
   return element;
 }
-
