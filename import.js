@@ -1,8 +1,10 @@
+'use strict';
+
 const mammoth = require('mammoth');
 const fs = require('fs');
 const settings = require('ep_etherpad-lite/node/utils/Settings');
 
-exports.import = function (hook_name, args, callback) {
+exports.import = (hookName, args, callback) => {
   const srcFile = args.srcFile;
   const destFile = args.destFile;
 
@@ -35,7 +37,6 @@ exports.import = function (hook_name, args, callback) {
   const docType = srcFile.split('.').pop();
 
   if (docType !== 'docx') return callback(); // we don't support this doctype in this plugin
-  const results = '';
   console.log('Using mammoth to convert DocX file');
 
   mammoth.convertToHtml(
@@ -43,9 +44,12 @@ exports.import = function (hook_name, args, callback) {
         path: srcFile,
       }, options).then(
       (result) => {
-        console.log(result.value);
-        //    result.value = result.value.replace("</h1>", "</h1><br>");
-        fs.writeFile(destFile, `<!doctype html>\n<html lang=\'en\'>\n<body>\n${result.value}\n</body>\n</html>\n`, 'utf8', (err) => {
+        fs.writeFile(destFile, `<!doctype html>\n<html lang='en'>
+            <body>
+            ${result.value}
+            </body>
+            </html>
+          `, 'utf8', (err) => {
           if (err) callback(err, null);
           callback(destFile);
         });
@@ -59,7 +63,7 @@ exports.import = function (hook_name, args, callback) {
       });
 };
 
-function transformElement(element) {
+const transformElement = (element) => {
   if (element.children) {
     element.children.forEach(transformElement);
   }
@@ -78,4 +82,4 @@ function transformElement(element) {
     }
   }
   return element;
-}
+};

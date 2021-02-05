@@ -1,5 +1,6 @@
+'use strict';
+
 const mammoth = require('mammoth');
-const fs = require('fs');
 
 let docxPath = '/home/jose/Desktop/centre.docx';
 if (process.argv[2]) docxPath = process.argv[2];
@@ -9,7 +10,7 @@ require('mammoth/lib/docx/docx-reader').read({path: docxPath}).then((raw) => {
   console.log('Input data');
   const data = raw.value.children;
   // console.log(data);
-  for (const i in data) {
+  for (const i of data) {
     console.log('Line number', i);
     const blob = data[i];
     console.log(blob);
@@ -35,8 +36,6 @@ const options = {
 
 mammoth.convertToHtml({path: docxPath}, options)
     .then((result) => {
-      const html = result.value; // The generated HTML
-      const messages = result.messages; // Any messages, such as warnings during conversion
       console.log(result);
     })
     .fail((e) => {
@@ -46,7 +45,7 @@ mammoth.convertToHtml({path: docxPath}, options)
       console.log(result);
     });
 
-function transformElement(element) {
+const transformElement = (element) => {
   if (element.children) {
     element.children.forEach(transformElement);
   }
@@ -56,4 +55,4 @@ function transformElement(element) {
     }
   }
   return element;
-}
+};

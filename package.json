@@ -9,10 +9,10 @@
   },
   "contributors": [],
   "dependencies": {
-    "mammoth": "1.4.11"
+    "mammoth": "1.4.16"
   },
   "engines": {
-    "node": "*"
+    "node": ">=10.17.0"
   },
   "repository": {
     "type": "git",
