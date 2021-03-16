@@ -1,13 +1,10 @@
 'use strict';
 
 const mammoth = require('mammoth');
-const fs = require('fs');
+const fs = require('fs').promises;
 const settings = require('ep_etherpad-lite/node/utils/Settings');
 
-exports.import = (hookName, args, callback) => {
-  const srcFile = args.srcFile;
-  const destFile = args.destFile;
-
+exports.import = async (hookName, {srcFile, destFile}) => {
   if (!settings.ep_mammoth) {
     settings.ep_mammoth = {};
   }
@@ -35,32 +32,12 @@ exports.import = (hookName, args, callback) => {
 
   // First things first do we handle this doc type?
   const docType = srcFile.split('.').pop();
-
-  if (docType !== 'docx') return callback(); // we don't support this doctype in this plugin
+  if (docType !== 'docx') return; // we don't support this doctype in this plugin
   console.log('Using mammoth to convert DocX file');
-
-  mammoth.convertToHtml(
-      {
-        path: srcFile,
-      }, options).then(
-      (result) => {
-        fs.writeFile(destFile, `<!doctype html>\n<html lang='en'>
-            <body>
-            ${result.value}
-            </body>
-            </html>
-          `, 'utf8', (err) => {
-          if (err) callback(err, null);
-          callback(destFile);
-        });
-      })
-      .fail((e) => {
-        console.warn('Mammoth failed to import this file');
-        return callback();
-      })
-      .done(() => {
-        // done
-      });
+  const {value} = await mammoth.convertToHtml({path: srcFile}, options);
+  const html = `<!doctype html>\n<html lang='en'><body>${value}</body></html>`;
+  await fs.writeFile(destFile, html, 'utf8');
+  return destFile;
 };
 
 const transformElement = (element) => {
