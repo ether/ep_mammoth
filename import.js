@@ -4,7 +4,7 @@ const mammoth = require('mammoth');
 const fs = require('fs').promises;
 const settings = require('ep_etherpad-lite/node/utils/Settings');
 
-exports.import = async (hookName, {srcFile, destFile, fileEnding}) => {
+exports.import = async (hookName, {srcFile, destFile, fileEnding, padId}) => {
   if (fileEnding !== 'docx') return;
   if (!settings.ep_mammoth) {
     settings.ep_mammoth = {};
@@ -31,7 +31,7 @@ exports.import = async (hookName, {srcFile, destFile, fileEnding}) => {
     ignoreEmptyParagraphs: settings.ep_mammoth.ignoreEmptyParagraphs,
   };
 
-  console.log(`Using mammoth to convert DocX file ${srcFile}`);
+  console.log(`Using mammoth to convert DocX file ${srcFile} for pad ${padId || '<unknown>'}`);
   const {value} = await mammoth.convertToHtml({path: srcFile}, options);
   const html = `<!doctype html>\n<html lang='en'><body>${value}</body></html>`;
   await fs.writeFile(destFile, html, 'utf8');
