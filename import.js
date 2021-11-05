@@ -33,7 +33,7 @@ exports.import = async (hookName, {srcFile, destFile}) => {
   // First things first do we handle this doc type?
   const docType = srcFile.split('.').pop();
   if (docType !== 'docx') return; // we don't support this doctype in this plugin
-  console.log('Using mammoth to convert DocX file');
+  console.log(`Using mammoth to convert DocX file ${srcFile}`);
   const {value} = await mammoth.convertToHtml({path: srcFile}, options);
   const html = `<!doctype html>\n<html lang='en'><body>${value}</body></html>`;
   await fs.writeFile(destFile, html, 'utf8');
