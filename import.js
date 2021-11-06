@@ -5,7 +5,7 @@ const fs = require('fs').promises;
 const settings = require('ep_etherpad-lite/node/utils/Settings');
 
 exports.import = async (hookName, {srcFile, destFile, fileEnding, padId}) => {
-  if (fileEnding !== 'docx') return;
+  if (fileEnding !== '.docx') return;
   if (!settings.ep_mammoth) {
     settings.ep_mammoth = {};
   }
