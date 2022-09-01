@@ -9,7 +9,7 @@
   },
   "contributors": [],
   "dependencies": {
-    "mammoth": "^1.4.19"
+    "mammoth": "^1.5.1"
   },
   "engines": {
     "node": ">=12.17.0"
